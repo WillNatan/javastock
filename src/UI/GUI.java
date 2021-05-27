@@ -28,6 +28,7 @@ public class GUI extends javax.swing.JFrame implements Observateur{
     private ProduitTableModel model;
     private HeadCategoryTableModel hcmodel;
     private SubCategoryTableModel scmodel;
+    private int observatorPointer;
     /**
      * Creates new form GUI
      */
@@ -129,7 +130,7 @@ public class GUI extends javax.swing.JFrame implements Observateur{
         headCategoryIdTxt = new javax.swing.JTextField();
         HeadCategorySubmit = new javax.swing.JButton();
         jLabel36 = new javax.swing.JLabel();
-        SubCategoryTxt = new javax.swing.JTextField();
+        SubCategoryIdTxt = new javax.swing.JTextField();
         SubCategorySubmit = new javax.swing.JButton();
         jLabel37 = new javax.swing.JLabel();
         HeadCategoryCbox = new javax.swing.JComboBox<>();
@@ -137,6 +138,8 @@ public class GUI extends javax.swing.JFrame implements Observateur{
         headCategoryNameTxt = new javax.swing.JTextField();
         jlabel39 = new javax.swing.JLabel();
         jlabel40 = new javax.swing.JLabel();
+        SubCategoryTxt = new javax.swing.JTextField();
+        jLabel39 = new javax.swing.JLabel();
         DashboardMenu = new javax.swing.JPanel();
         Menu = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -507,18 +510,23 @@ public class GUI extends javax.swing.JFrame implements Observateur{
 
         jLabel36.setText("Sous catégorie");
         Categories.add(jLabel36, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 620, -1, -1));
-        Categories.add(SubCategoryTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 640, 210, 30));
+        Categories.add(SubCategoryIdTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 570, 210, 30));
 
         SubCategorySubmit.setText("Ajouter");
+        SubCategorySubmit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SubCategorySubmitActionPerformed(evt);
+            }
+        });
         Categories.add(SubCategorySubmit, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 690, -1, -1));
 
         jLabel37.setText("Nouvelle sous catégorie");
         Categories.add(jLabel37, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 530, -1, -1));
 
-        Categories.add(HeadCategoryCbox, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 590, 210, -1));
+        Categories.add(HeadCategoryCbox, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 570, 210, 30));
 
-        jLabel38.setText("Catégorie parente");
-        Categories.add(jLabel38, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 560, -1, -1));
+        jLabel38.setText("ID");
+        Categories.add(jLabel38, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 550, -1, -1));
         Categories.add(headCategoryNameTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 570, 210, 30));
 
         jlabel39.setText("ID");
@@ -526,6 +534,10 @@ public class GUI extends javax.swing.JFrame implements Observateur{
 
         jlabel40.setText("Nom de catégorie");
         Categories.add(jlabel40, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 550, -1, -1));
+        Categories.add(SubCategoryTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 640, 210, 30));
+
+        jLabel39.setText("Catégorie parente");
+        Categories.add(jLabel39, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 550, -1, -1));
 
         MainTab.addTab("tab6", Categories);
 
@@ -684,8 +696,6 @@ public class GUI extends javax.swing.JFrame implements Observateur{
     }
     
     
-    
-    
     private void DashboardButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DashboardButtonMouseEntered
         changeColor(DashboardButton, new Color(55,155,255));
     }//GEN-LAST:event_DashboardButtonMouseEntered
@@ -746,6 +756,7 @@ public class GUI extends javax.swing.JFrame implements Observateur{
     }//GEN-LAST:event_SubmitProductMouseEntered
 
     private void SubmitProductMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SubmitProductMouseClicked
+        observatorPointer = 0;
         p.createProduct(Long.parseLong(NbPdtText.getText()), PdtNameText.getText(), Float.parseFloat(PdtPriceText.getText()), Integer.parseInt(PdtQtyText.getText()));
         MainTab.setSelectedIndex(1);
     }//GEN-LAST:event_SubmitProductMouseClicked
@@ -806,9 +817,14 @@ public class GUI extends javax.swing.JFrame implements Observateur{
     }//GEN-LAST:event_CategoriesButtonMouseExited
 
     private void HeadCategorySubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_HeadCategorySubmitActionPerformed
-        // TODO add your handling code here:
+        observatorPointer = 1;
         h.createHeadCategory(Integer.parseInt(headCategoryIdTxt.getText()),headCategoryNameTxt.getText());
     }//GEN-LAST:event_HeadCategorySubmitActionPerformed
+
+    private void SubCategorySubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SubCategorySubmitActionPerformed
+        observatorPointer = 2;
+        s.createSubCategory(Integer.parseInt(SubCategoryIdTxt.getText()),SubCategoryTxt.getText(), (HeadCategory)HeadCategoryCbox.getSelectedItem());
+    }//GEN-LAST:event_SubCategorySubmitActionPerformed
 
     /**
      * @param args the command line arguments
@@ -858,7 +874,7 @@ public class GUI extends javax.swing.JFrame implements Observateur{
     private javax.swing.JPanel EditProduct;
     private javax.swing.JPanel EditProductButton;
     private javax.swing.JTable HeadCategoriesTable;
-    private javax.swing.JComboBox<String> HeadCategoryCbox;
+    private javax.swing.JComboBox<HeadCategory> HeadCategoryCbox;
     private javax.swing.JButton HeadCategorySubmit;
     private javax.swing.JPanel LogoutButton;
     private javax.swing.JPanel MainPanel;
@@ -880,6 +896,7 @@ public class GUI extends javax.swing.JFrame implements Observateur{
     private javax.swing.JPanel Stocks;
     private javax.swing.JPanel StocksButton;
     private javax.swing.JTable SubCategoriesTable;
+    private javax.swing.JTextField SubCategoryIdTxt;
     private javax.swing.JButton SubCategorySubmit;
     private javax.swing.JTextField SubCategoryTxt;
     private javax.swing.JPanel SubmitEditProduct;
@@ -918,6 +935,7 @@ public class GUI extends javax.swing.JFrame implements Observateur{
     private javax.swing.JLabel jLabel36;
     private javax.swing.JLabel jLabel37;
     private javax.swing.JLabel jLabel38;
+    private javax.swing.JLabel jLabel39;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -941,6 +959,23 @@ public class GUI extends javax.swing.JFrame implements Observateur{
 
     @Override
     public void notifier(Object o) {
-        model.addProduit((Produit) o);
+        switch(observatorPointer)
+        {
+            case 0:
+                model.addProduit((Produit) o);
+                break;
+            case 1:
+                hcmodel.addCategory((HeadCategory) o);
+                HeadCategoryCbox.addItem((HeadCategory)o);
+                handleHeadCategoryObservator();
+                break;
+            case 2:
+                scmodel.addCategory((SubCategory) o);
+                handleSubCategoryObservator();
+                break;
+            default:
+                System.out.println("No matching pointer");
+           
+        }
     }
 }

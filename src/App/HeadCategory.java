@@ -40,5 +40,11 @@ public class HeadCategory extends Sujet implements Category {
         this.setNameCategory(nameCategory);
         this.notifierObservateurs();
     }
+
+    @Override
+    public String toString() {
+        return nameCategory;
+    }
    
+     
 }

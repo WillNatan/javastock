@@ -45,9 +45,10 @@ public class SubCategory extends Sujet implements Category {
         this.nameCategory=nameCategory;
     }
     
-     public void createSubCategory(int id, String nameCategory){
+     public void createSubCategory(int id, String nameCategory, HeadCategory parent){
         this.setId(id);
         this.setNameCategory(nameCategory);
+        this.setParent(parent);
         this.notifierObservateurs();
     }
      

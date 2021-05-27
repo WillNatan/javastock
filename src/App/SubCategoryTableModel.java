@@ -5,7 +5,6 @@
  */
 package App;
 
-import designpattern.Category;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
@@ -15,7 +14,7 @@ import javax.swing.table.AbstractTableModel;
  * @author Julien
  */
 public class SubCategoryTableModel extends AbstractTableModel {
-    private List<Category> categories;
+    private List<SubCategory> categories;
     private String colNames;
     
     @Override
@@ -28,12 +27,18 @@ public class SubCategoryTableModel extends AbstractTableModel {
     @Override
     public int getColumnCount() {
         
-        return 2;
+        return 3;
         
     }
 
     public SubCategoryTableModel() {
-        categories= new ArrayList<Category>();
+        categories= new ArrayList<SubCategory>();
+    }
+    
+    public void addCategory(SubCategory p){
+        categories.add(p);
+        this.fireTableDataChanged();
+        this.fireTableChanged(null);
     }
     
     @Override
@@ -46,6 +51,9 @@ public class SubCategoryTableModel extends AbstractTableModel {
             case 1:
                 value = "Nom de catégorie";
                 break;
+            case 2:
+                value = "Parent";
+                break;
         }
 
         return value;
@@ -53,7 +61,7 @@ public class SubCategoryTableModel extends AbstractTableModel {
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        Category category = categories.get(rowIndex);
+        SubCategory category = categories.get(rowIndex);
         Object value = null;
         
         switch (columnIndex) {
@@ -63,8 +71,10 @@ public class SubCategoryTableModel extends AbstractTableModel {
             case 1:
                 value = category.getNameCategory();
                 break;
+            case 2:
+                value = category.getParent().getNameCategory();
+                break;
         }
-
         return value;
         
     }

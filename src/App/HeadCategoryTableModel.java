@@ -5,7 +5,6 @@
  */
 package App;
 
-import designpattern.Category;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
@@ -15,7 +14,7 @@ import javax.swing.table.AbstractTableModel;
  * @author Julien
  */
 public class HeadCategoryTableModel extends AbstractTableModel {
-    private List<Category> categories;
+    private List<HeadCategory> categories;
     private String colNames;
     
     @Override
@@ -33,7 +32,13 @@ public class HeadCategoryTableModel extends AbstractTableModel {
     }
 
     public HeadCategoryTableModel() {
-        categories= new ArrayList<Category>();
+        categories= new ArrayList<HeadCategory>();
+    }
+    
+    public void addCategory(HeadCategory p){
+        categories.add(p);
+        this.fireTableDataChanged();
+        this.fireTableChanged(null);
     }
     
     @Override
@@ -53,7 +58,7 @@ public class HeadCategoryTableModel extends AbstractTableModel {
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        Category category = categories.get(rowIndex);
+        HeadCategory category = categories.get(rowIndex);
         Object value = null;
         
         switch (columnIndex) {
