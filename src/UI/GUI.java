@@ -5,8 +5,12 @@
  */
 package UI;
 
+import App.HeadCategory;
+import App.HeadCategoryTableModel;
 import App.Produit;
 import App.ProduitTableModel;
+import App.SubCategory;
+import App.SubCategoryTableModel;
 import designpattern.Observateur;
 import java.awt.Color;
 import java.awt.Font;
@@ -19,18 +23,33 @@ import javax.swing.JPanel;
 public class GUI extends javax.swing.JFrame implements Observateur{
 
     private Produit p;
+    private HeadCategory h;
+    private SubCategory s;
     private ProduitTableModel model;
+    private HeadCategoryTableModel hcmodel;
+    private SubCategoryTableModel scmodel;
     /**
      * Creates new form GUI
      */
     public GUI() {
        initComponents();
+       handleProductObservator();
+       handleHeadCategoryObservator();
+       handleSubCategoryObservator();
+       
        StockTable.getTableHeader().setOpaque(false);
        StockTable.getTableHeader().setBackground(new Color(81,104,255));
        StockTable.getTableHeader().setForeground(new Color(255,255,255));
        StockTable.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 12));
+       
        model = new ProduitTableModel();
        StockTable.setModel(model);
+       
+       hcmodel = new HeadCategoryTableModel();
+       HeadCategoriesTable.setModel(hcmodel);
+       
+       scmodel = new SubCategoryTableModel();
+       SubCategoriesTable.setModel(scmodel);
        
     }
     /**
@@ -103,11 +122,11 @@ public class GUI extends javax.swing.JFrame implements Observateur{
         jScrollPane2 = new javax.swing.JScrollPane();
         SubCategoriesTable = new javax.swing.JTable();
         jScrollPane3 = new javax.swing.JScrollPane();
-        HeadCategoriesTable1 = new javax.swing.JTable();
+        HeadCategoriesTable = new javax.swing.JTable();
         jLabel33 = new javax.swing.JLabel();
         jLabel34 = new javax.swing.JLabel();
         jLabel35 = new javax.swing.JLabel();
-        HeadCategoryTxt = new javax.swing.JTextField();
+        headCategoryIdTxt = new javax.swing.JTextField();
         HeadCategorySubmit = new javax.swing.JButton();
         jLabel36 = new javax.swing.JLabel();
         SubCategoryTxt = new javax.swing.JTextField();
@@ -115,6 +134,9 @@ public class GUI extends javax.swing.JFrame implements Observateur{
         jLabel37 = new javax.swing.JLabel();
         HeadCategoryCbox = new javax.swing.JComboBox<>();
         jLabel38 = new javax.swing.JLabel();
+        headCategoryNameTxt = new javax.swing.JTextField();
+        jlabel39 = new javax.swing.JLabel();
+        jlabel40 = new javax.swing.JLabel();
         DashboardMenu = new javax.swing.JPanel();
         Menu = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -450,7 +472,7 @@ public class GUI extends javax.swing.JFrame implements Observateur{
 
         Categories.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 120, 500, 390));
 
-        HeadCategoriesTable1.setModel(new javax.swing.table.DefaultTableModel(
+        HeadCategoriesTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null},
                 {null, null},
@@ -461,7 +483,7 @@ public class GUI extends javax.swing.JFrame implements Observateur{
                 "ID", "Nom de categorie"
             }
         ));
-        jScrollPane3.setViewportView(HeadCategoriesTable1);
+        jScrollPane3.setViewportView(HeadCategoriesTable);
 
         Categories.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 120, 500, 390));
 
@@ -473,10 +495,15 @@ public class GUI extends javax.swing.JFrame implements Observateur{
 
         jLabel35.setText("Nouvelle catégorie principale");
         Categories.add(jLabel35, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 530, -1, -1));
-        Categories.add(HeadCategoryTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 550, 210, 30));
+        Categories.add(headCategoryIdTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 570, 210, 30));
 
         HeadCategorySubmit.setText("Ajouter");
-        Categories.add(HeadCategorySubmit, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 590, -1, -1));
+        HeadCategorySubmit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                HeadCategorySubmitActionPerformed(evt);
+            }
+        });
+        Categories.add(HeadCategorySubmit, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 610, -1, -1));
 
         jLabel36.setText("Sous catégorie");
         Categories.add(jLabel36, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 620, -1, -1));
@@ -492,6 +519,13 @@ public class GUI extends javax.swing.JFrame implements Observateur{
 
         jLabel38.setText("Catégorie parente");
         Categories.add(jLabel38, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 560, -1, -1));
+        Categories.add(headCategoryNameTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 570, 210, 30));
+
+        jlabel39.setText("ID");
+        Categories.add(jlabel39, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 550, -1, -1));
+
+        jlabel40.setText("Nom de catégorie");
+        Categories.add(jlabel40, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 550, -1, -1));
 
         MainTab.addTab("tab6", Categories);
 
@@ -620,11 +654,36 @@ public class GUI extends javax.swing.JFrame implements Observateur{
         hover.setBackground(rand);
     }
     
-    public void handleObservator(){
+    public void handleProductObservator(){
         p = new Produit();
        this.p = p;
        p.ajouterObservateur(this);
     }
+    
+    public void handleHeadCategoryObservator(){
+        h = new HeadCategory();
+        this.h=h;
+        h.ajouterObservateur(this);
+    }
+    
+    public void handleSubCategoryObservator(){
+        s = new SubCategory();
+        this.s=s;
+        s.ajouterObservateur(this);
+    }
+    
+    public void handleRemoveProductObservator(){
+       p.supprimerObservateur(this);
+    }
+    
+    public void handleRemoveHeadCategoryObservator(){
+       h.supprimerObservateur(this);
+    }
+    public void handleRemoveSubCategoryObservator(){
+       s.supprimerObservateur(this);
+    }
+    
+    
     
     
     private void DashboardButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DashboardButtonMouseEntered
@@ -672,7 +731,9 @@ public class GUI extends javax.swing.JFrame implements Observateur{
     }//GEN-LAST:event_AddButtonMouseExited
 
     private void AddButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AddButtonMouseClicked
-        handleObservator();
+        handleProductObservator();
+        handleRemoveHeadCategoryObservator();
+        handleRemoveSubCategoryObservator();
         MainTab.setSelectedIndex(2);
     }//GEN-LAST:event_AddButtonMouseClicked
 
@@ -730,6 +791,9 @@ public class GUI extends javax.swing.JFrame implements Observateur{
     }//GEN-LAST:event_SubmitEditProductMouseExited
 
     private void CategoriesButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CategoriesButtonMouseClicked
+        handleRemoveProductObservator();
+        handleHeadCategoryObservator();
+        handleSubCategoryObservator();
         MainTab.setSelectedIndex(5);
     }//GEN-LAST:event_CategoriesButtonMouseClicked
 
@@ -740,6 +804,11 @@ public class GUI extends javax.swing.JFrame implements Observateur{
     private void CategoriesButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CategoriesButtonMouseExited
         changeColor(CategoriesButton, new Color(81,104,255));
     }//GEN-LAST:event_CategoriesButtonMouseExited
+
+    private void HeadCategorySubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_HeadCategorySubmitActionPerformed
+        // TODO add your handling code here:
+        h.createHeadCategory(Integer.parseInt(headCategoryIdTxt.getText()),headCategoryNameTxt.getText());
+    }//GEN-LAST:event_HeadCategorySubmitActionPerformed
 
     /**
      * @param args the command line arguments
@@ -788,10 +857,9 @@ public class GUI extends javax.swing.JFrame implements Observateur{
     private javax.swing.JPanel Details;
     private javax.swing.JPanel EditProduct;
     private javax.swing.JPanel EditProductButton;
-    private javax.swing.JTable HeadCategoriesTable1;
+    private javax.swing.JTable HeadCategoriesTable;
     private javax.swing.JComboBox<String> HeadCategoryCbox;
     private javax.swing.JButton HeadCategorySubmit;
-    private javax.swing.JTextField HeadCategoryTxt;
     private javax.swing.JPanel LogoutButton;
     private javax.swing.JPanel MainPanel;
     private javax.swing.JTabbedPane MainTab;
@@ -816,6 +884,8 @@ public class GUI extends javax.swing.JFrame implements Observateur{
     private javax.swing.JTextField SubCategoryTxt;
     private javax.swing.JPanel SubmitEditProduct;
     private javax.swing.JPanel SubmitProduct;
+    private javax.swing.JTextField headCategoryIdTxt;
+    private javax.swing.JTextField headCategoryNameTxt;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -865,6 +935,8 @@ public class GUI extends javax.swing.JFrame implements Observateur{
     private javax.swing.JSeparator jSeparator6;
     private javax.swing.JSeparator jSeparator7;
     private javax.swing.JSeparator jSeparator8;
+    private javax.swing.JLabel jlabel39;
+    private javax.swing.JLabel jlabel40;
     // End of variables declaration//GEN-END:variables
 
     @Override
