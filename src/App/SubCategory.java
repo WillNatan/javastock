@@ -16,6 +16,8 @@ public class SubCategory extends Sujet implements Category {
     private Category parent;
     private int id;
     private String nameCategory;
+
+    
     
     public Category getParent() {
         return parent;
@@ -52,4 +54,8 @@ public class SubCategory extends Sujet implements Category {
         this.notifierObservateurs();
     }
      
+    @Override
+    public String toString() {
+        return nameCategory;
+    }
 }

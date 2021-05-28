@@ -14,6 +14,8 @@ import App.SubCategoryTableModel;
 import designpattern.Observateur;
 import java.awt.Color;
 import java.awt.Font;
+import java.sql.DatabaseMetaData;
+import javax.accessibility.AccessibleRole;
 import javax.swing.JPanel;
 
 /**
@@ -88,6 +90,8 @@ public class GUI extends javax.swing.JFrame implements Observateur{
         jSeparator4 = new javax.swing.JSeparator();
         SubmitProduct = new javax.swing.JPanel();
         jLabel16 = new javax.swing.JLabel();
+        jLabel40 = new javax.swing.JLabel();
+        ProductCategory = new javax.swing.JComboBox<>();
         Details = new javax.swing.JPanel();
         jLabel17 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
@@ -98,26 +102,9 @@ public class GUI extends javax.swing.JFrame implements Observateur{
         ProductPrice = new javax.swing.JLabel();
         jLabel22 = new javax.swing.JLabel();
         ProductQty = new javax.swing.JLabel();
-        EditProductButton = new javax.swing.JPanel();
-        jLabel23 = new javax.swing.JLabel();
         DeleteProductButton = new javax.swing.JPanel();
         jLabel24 = new javax.swing.JLabel();
-        EditProduct = new javax.swing.JPanel();
-        jLabel18 = new javax.swing.JLabel();
-        jLabel25 = new javax.swing.JLabel();
-        jSeparator5 = new javax.swing.JSeparator();
-        NbPdtText1 = new javax.swing.JTextField();
-        jSeparator6 = new javax.swing.JSeparator();
-        PdtNameText1 = new javax.swing.JTextField();
-        jLabel26 = new javax.swing.JLabel();
-        jSeparator7 = new javax.swing.JSeparator();
-        PdtPriceText1 = new javax.swing.JTextField();
-        jLabel27 = new javax.swing.JLabel();
-        jLabel28 = new javax.swing.JLabel();
-        PdtQtyText1 = new javax.swing.JTextField();
-        jSeparator8 = new javax.swing.JSeparator();
-        SubmitEditProduct = new javax.swing.JPanel();
-        jLabel29 = new javax.swing.JLabel();
+        ProductEditButton = new javax.swing.JButton();
         Categories = new javax.swing.JPanel();
         jLabel30 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -140,6 +127,25 @@ public class GUI extends javax.swing.JFrame implements Observateur{
         jlabel40 = new javax.swing.JLabel();
         SubCategoryTxt = new javax.swing.JTextField();
         jLabel39 = new javax.swing.JLabel();
+        EditProduct = new javax.swing.JPanel();
+        jLabel18 = new javax.swing.JLabel();
+        jLabel25 = new javax.swing.JLabel();
+        jSeparator5 = new javax.swing.JSeparator();
+        NbPdtText1 = new javax.swing.JTextField();
+        jSeparator6 = new javax.swing.JSeparator();
+        PdtNameText1 = new javax.swing.JTextField();
+        jLabel26 = new javax.swing.JLabel();
+        jSeparator7 = new javax.swing.JSeparator();
+        PdtPriceText1 = new javax.swing.JTextField();
+        jLabel27 = new javax.swing.JLabel();
+        jLabel28 = new javax.swing.JLabel();
+        PdtQtyText1 = new javax.swing.JTextField();
+        jSeparator8 = new javax.swing.JSeparator();
+        SubmitEditProduct = new javax.swing.JPanel();
+        jLabel29 = new javax.swing.JLabel();
+        ProductCategorieEdit = new javax.swing.JComboBox<>();
+        jLabel23 = new javax.swing.JLabel();
+        jLabel41 = new javax.swing.JLabel();
         DashboardMenu = new javax.swing.JPanel();
         Menu = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -269,8 +275,8 @@ public class GUI extends javax.swing.JFrame implements Observateur{
         AddProduct.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 350, -1, -1));
 
         jLabel15.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel15.setText("Quantité");
-        AddProduct.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 460, -1, -1));
+        jLabel15.setText("Catégorie");
+        AddProduct.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 580, -1, -1));
 
         PdtQtyText.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         PdtQtyText.setBorder(null);
@@ -297,7 +303,13 @@ public class GUI extends javax.swing.JFrame implements Observateur{
         jLabel16.setText("Ajouter");
         SubmitProduct.add(jLabel16, java.awt.BorderLayout.CENTER);
 
-        AddProduct.add(SubmitProduct, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 580, 140, 40));
+        AddProduct.add(SubmitProduct, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 690, 140, 40));
+
+        jLabel40.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel40.setText("Quantité");
+        AddProduct.add(jLabel40, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 460, -1, -1));
+
+        AddProduct.add(ProductCategory, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 620, 160, 50));
 
         MainTab.addTab("tab3", AddProduct);
 
@@ -314,7 +326,7 @@ public class GUI extends javax.swing.JFrame implements Observateur{
         Details.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 120, -1, -1));
 
         NbProduct.setText("1");
-        Details.add(NbProduct, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 170, -1, -1));
+        Details.add(NbProduct, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 170, 10, -1));
 
         ProductName.setText("GTX 1050 Ti");
         Details.add(ProductName, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 260, -1, -1));
@@ -340,28 +352,6 @@ public class GUI extends javax.swing.JFrame implements Observateur{
         ProductQty.setText("25");
         Details.add(ProductQty, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 440, -1, -1));
 
-        EditProductButton.setBackground(new java.awt.Color(55, 155, 255));
-        EditProductButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                EditProductButtonMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                EditProductButtonMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                EditProductButtonMouseExited(evt);
-            }
-        });
-        EditProductButton.setLayout(new java.awt.BorderLayout());
-
-        jLabel23.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        jLabel23.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel23.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel23.setText("Modifier le produit");
-        EditProductButton.add(jLabel23, java.awt.BorderLayout.CENTER);
-
-        Details.add(EditProductButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 480, 170, 40));
-
         DeleteProductButton.setBackground(new java.awt.Color(118, 86, 255));
         DeleteProductButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -384,74 +374,15 @@ public class GUI extends javax.swing.JFrame implements Observateur{
 
         Details.add(DeleteProductButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 480, 160, 40));
 
-        MainTab.addTab("tab4", Details);
-
-        EditProduct.setBackground(new java.awt.Color(255, 255, 255));
-        EditProduct.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel18.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        jLabel18.setText("Modifier un produit");
-        EditProduct.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, -1, -1));
-
-        jLabel25.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel25.setText("Numéro du produit");
-        EditProduct.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 110, -1, -1));
-        EditProduct.add(jSeparator5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 200, 700, 10));
-
-        NbPdtText1.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        NbPdtText1.setBorder(null);
-        EditProduct.add(NbPdtText1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 150, 700, 50));
-        EditProduct.add(jSeparator6, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 320, 700, 10));
-
-        PdtNameText1.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        PdtNameText1.setBorder(null);
-        EditProduct.add(PdtNameText1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 270, 700, 50));
-
-        jLabel26.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel26.setText("Nom du produit");
-        EditProduct.add(jLabel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 230, -1, -1));
-        EditProduct.add(jSeparator7, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 440, 700, 10));
-
-        PdtPriceText1.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        PdtPriceText1.setBorder(null);
-        EditProduct.add(PdtPriceText1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 390, 700, 50));
-
-        jLabel27.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel27.setText("Prix");
-        EditProduct.add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 350, -1, -1));
-
-        jLabel28.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel28.setText("Quantité");
-        EditProduct.add(jLabel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 460, -1, -1));
-
-        PdtQtyText1.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        PdtQtyText1.setBorder(null);
-        EditProduct.add(PdtQtyText1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 500, 700, 50));
-        EditProduct.add(jSeparator8, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 550, 700, 10));
-
-        SubmitEditProduct.setBackground(new java.awt.Color(55, 155, 255));
-        SubmitEditProduct.addMouseListener(new java.awt.event.MouseAdapter() {
+        ProductEditButton.setText("Mofidier");
+        ProductEditButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                SubmitEditProductMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                SubmitEditProductMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                SubmitEditProductMouseExited(evt);
+                ProductEditButtonMouseClicked(evt);
             }
         });
-        SubmitEditProduct.setLayout(new java.awt.BorderLayout());
+        Details.add(ProductEditButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 480, 140, 40));
 
-        jLabel29.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        jLabel29.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel29.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel29.setText("Modifier");
-        SubmitEditProduct.add(jLabel29, java.awt.BorderLayout.CENTER);
-
-        EditProduct.add(SubmitEditProduct, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 580, 140, 40));
-
-        MainTab.addTab("tab5", EditProduct);
+        MainTab.addTab("tab4", Details);
 
         Categories.setBackground(new java.awt.Color(255, 255, 255));
         Categories.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -540,6 +471,85 @@ public class GUI extends javax.swing.JFrame implements Observateur{
         Categories.add(jLabel39, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 550, -1, -1));
 
         MainTab.addTab("tab6", Categories);
+
+        EditProduct.setBackground(new java.awt.Color(255, 255, 255));
+        EditProduct.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel18.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        jLabel18.setText("Modifier un produit");
+        EditProduct.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, -1, -1));
+
+        jLabel25.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel25.setText("Numéro du produit");
+        EditProduct.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 110, -1, -1));
+        EditProduct.add(jSeparator5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 200, 700, 10));
+
+        NbPdtText1.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        NbPdtText1.setBorder(null);
+        EditProduct.add(NbPdtText1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 150, 700, 50));
+        EditProduct.add(jSeparator6, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 320, 700, 10));
+
+        PdtNameText1.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        PdtNameText1.setBorder(null);
+        EditProduct.add(PdtNameText1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 270, 700, 50));
+
+        jLabel26.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel26.setText("Nom du produit");
+        EditProduct.add(jLabel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 230, -1, -1));
+        EditProduct.add(jSeparator7, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 440, 700, 10));
+
+        PdtPriceText1.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        PdtPriceText1.setBorder(null);
+        EditProduct.add(PdtPriceText1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 390, 700, 50));
+
+        jLabel27.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel27.setText("Prix");
+        EditProduct.add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 350, -1, -1));
+
+        jLabel28.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel28.setText("Catégorie");
+        EditProduct.add(jLabel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 590, -1, -1));
+
+        PdtQtyText1.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        PdtQtyText1.setBorder(null);
+        EditProduct.add(PdtQtyText1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 500, 700, 50));
+        EditProduct.add(jSeparator8, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 550, 700, 10));
+
+        SubmitEditProduct.setBackground(new java.awt.Color(55, 155, 255));
+        SubmitEditProduct.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                SubmitEditProductMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                SubmitEditProductMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                SubmitEditProductMouseExited(evt);
+            }
+        });
+        SubmitEditProduct.setLayout(new java.awt.BorderLayout());
+
+        jLabel29.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        jLabel29.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel29.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel29.setText("Modifier");
+        jLabel29.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel29MouseClicked(evt);
+            }
+        });
+        SubmitEditProduct.add(jLabel29, java.awt.BorderLayout.CENTER);
+
+        EditProduct.add(SubmitEditProduct, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 720, 140, 40));
+
+        EditProduct.add(ProductCategorieEdit, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 630, 140, 60));
+        EditProduct.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 600, -1, -1));
+
+        jLabel41.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel41.setText("Quantité");
+        EditProduct.add(jLabel41, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 460, -1, -1));
+
+        MainTab.addTab("tab5", EditProduct);
 
         MainPanel.add(MainTab, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -30, 1071, 830));
 
@@ -762,20 +772,15 @@ public class GUI extends javax.swing.JFrame implements Observateur{
     }//GEN-LAST:event_SubmitProductMouseClicked
 
     private void StockTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_StockTableMouseClicked
+        handleProductObservator();
+        
+        int row = StockTable.getSelectedRow() ;
+        NbProduct.setText(StockTable.getValueAt(row,0).toString());
+        ProductName.setText(StockTable.getValueAt(row,1).toString());
+        ProductPrice.setText(StockTable.getValueAt(row,2).toString());
+        ProductQty.setText(StockTable.getValueAt(row,3).toString());
         MainTab.setSelectedIndex(3);
     }//GEN-LAST:event_StockTableMouseClicked
-
-    private void EditProductButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_EditProductButtonMouseClicked
-        MainTab.setSelectedIndex(4);
-    }//GEN-LAST:event_EditProductButtonMouseClicked
-
-    private void EditProductButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_EditProductButtonMouseEntered
-        changeColor(EditProductButton, new Color(81,104,255));
-    }//GEN-LAST:event_EditProductButtonMouseEntered
-
-    private void EditProductButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_EditProductButtonMouseExited
-        changeColor(EditProductButton, new Color(55,155,255));
-    }//GEN-LAST:event_EditProductButtonMouseExited
 
     private void DeleteProductButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DeleteProductButtonMouseClicked
         // TODO add your handling code here:
@@ -791,6 +796,8 @@ public class GUI extends javax.swing.JFrame implements Observateur{
 
     private void SubmitEditProductMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SubmitEditProductMouseClicked
         // TODO add your handling code here:
+        handleProductObservator();
+        //PdtNameText1.set
     }//GEN-LAST:event_SubmitEditProductMouseClicked
 
     private void SubmitEditProductMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SubmitEditProductMouseEntered
@@ -805,7 +812,7 @@ public class GUI extends javax.swing.JFrame implements Observateur{
         handleRemoveProductObservator();
         handleHeadCategoryObservator();
         handleSubCategoryObservator();
-        MainTab.setSelectedIndex(5);
+        MainTab.setSelectedIndex(4);
     }//GEN-LAST:event_CategoriesButtonMouseClicked
 
     private void CategoriesButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CategoriesButtonMouseEntered
@@ -825,6 +832,19 @@ public class GUI extends javax.swing.JFrame implements Observateur{
         observatorPointer = 2;
         s.createSubCategory(Integer.parseInt(SubCategoryIdTxt.getText()),SubCategoryTxt.getText(), (HeadCategory)HeadCategoryCbox.getSelectedItem());
     }//GEN-LAST:event_SubCategorySubmitActionPerformed
+
+    private void jLabel29MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel29MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel29MouseClicked
+
+    private void ProductEditButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ProductEditButtonMouseClicked
+        // TODO add your handling code here:
+        NbPdtText1.setText(NbProduct.toString());
+        PdtNameText1.setText(ProductName.toString());
+        PdtPriceText1.setText(ProductPrice.toString());
+        PdtQtyText1.setText(ProductQty.toString());
+        MainTab.setSelectedIndex(5);
+    }//GEN-LAST:event_ProductEditButtonMouseClicked
 
     /**
      * @param args the command line arguments
@@ -872,7 +892,6 @@ public class GUI extends javax.swing.JFrame implements Observateur{
     private javax.swing.JPanel DeleteProductButton;
     private javax.swing.JPanel Details;
     private javax.swing.JPanel EditProduct;
-    private javax.swing.JPanel EditProductButton;
     private javax.swing.JTable HeadCategoriesTable;
     private javax.swing.JComboBox<HeadCategory> HeadCategoryCbox;
     private javax.swing.JButton HeadCategorySubmit;
@@ -889,6 +908,9 @@ public class GUI extends javax.swing.JFrame implements Observateur{
     private javax.swing.JTextField PdtPriceText1;
     private javax.swing.JTextField PdtQtyText;
     private javax.swing.JTextField PdtQtyText1;
+    private javax.swing.JComboBox<SubCategory> ProductCategorieEdit;
+    private javax.swing.JComboBox<SubCategory> ProductCategory;
+    private javax.swing.JButton ProductEditButton;
     private javax.swing.JLabel ProductName;
     private javax.swing.JLabel ProductPrice;
     private javax.swing.JLabel ProductQty;
@@ -937,6 +959,8 @@ public class GUI extends javax.swing.JFrame implements Observateur{
     private javax.swing.JLabel jLabel38;
     private javax.swing.JLabel jLabel39;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel40;
+    private javax.swing.JLabel jLabel41;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
@@ -971,6 +995,8 @@ public class GUI extends javax.swing.JFrame implements Observateur{
                 break;
             case 2:
                 scmodel.addCategory((SubCategory) o);
+                ProductCategory.addItem((SubCategory)o);
+                ProductCategorieEdit.addItem((SubCategory)o);
                 handleSubCategoryObservator();
                 break;
             default:

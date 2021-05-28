@@ -2,6 +2,7 @@ package App;
 
 
 import UI.GUI;
+import designpattern.Category;
 import designpattern.Sujet;
 
 /*
@@ -20,6 +21,16 @@ public class Produit extends Sujet {
     private String libelle;
     private Float prix;
     private Integer quantity;
+    private Category category;
+    
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+    
     
     public Long getId() {
         return id;

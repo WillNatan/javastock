@@ -5,9 +5,11 @@
  */
 package App;
 
+import designpattern.Category;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
+import jdk.javadoc.internal.doclets.formats.html.markup.Table;
 
 /**
  *
@@ -59,6 +61,7 @@ public class ProduitTableModel extends AbstractTableModel {
         this.fireTableChanged(null);
     }
     
+    
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         Produit produit = produits.get(rowIndex);
@@ -83,3 +86,8 @@ public class ProduitTableModel extends AbstractTableModel {
     }
 
 }
+    
+    
+    
+
+
