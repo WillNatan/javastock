@@ -5,11 +5,9 @@
  */
 package App;
 
-import designpattern.Category;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
-import jdk.javadoc.internal.doclets.formats.html.markup.Table;
 
 /**
  *

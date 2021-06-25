@@ -15,7 +15,4 @@ public interface Category {
     
     public String getNameCategory();
     public void setNameCategory(String nameCategory);
-    
-    
-    
 }
