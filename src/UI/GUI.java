@@ -31,6 +31,8 @@ public class GUI extends javax.swing.JFrame implements Observateur{
     private HeadCategoryTableModel hcmodel;
     private SubCategoryTableModel scmodel;
     private int observatorPointer;
+    private Produit selectedProduit;
+    private ProduitTableModel selecProduitTableModel;
     /**
      * Creates new form GUI
      */
@@ -53,6 +55,10 @@ public class GUI extends javax.swing.JFrame implements Observateur{
        
        scmodel = new SubCategoryTableModel();
        SubCategoriesTable.setModel(scmodel);
+       
+       HeadCategory gg = new HeadCategory();
+       gg.setId(1);
+       gg.setNameCategory("gg");
        
     }
     /**
@@ -253,11 +259,13 @@ public class GUI extends javax.swing.JFrame implements Observateur{
         AddProduct.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 200, 700, 10));
 
         NbPdtText.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        NbPdtText.setText("1");
         NbPdtText.setBorder(null);
         AddProduct.add(NbPdtText, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 150, 700, 50));
         AddProduct.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 320, 700, 10));
 
         PdtNameText.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        PdtNameText.setText("wp");
         PdtNameText.setBorder(null);
         AddProduct.add(PdtNameText, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 270, 700, 50));
 
@@ -267,6 +275,7 @@ public class GUI extends javax.swing.JFrame implements Observateur{
         AddProduct.add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 440, 700, 10));
 
         PdtPriceText.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        PdtPriceText.setText("40");
         PdtPriceText.setBorder(null);
         AddProduct.add(PdtPriceText, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 390, 700, 50));
 
@@ -279,6 +288,7 @@ public class GUI extends javax.swing.JFrame implements Observateur{
         AddProduct.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 580, -1, -1));
 
         PdtQtyText.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        PdtQtyText.setText("50");
         PdtQtyText.setBorder(null);
         AddProduct.add(PdtQtyText, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 500, 700, 50));
         AddProduct.add(jSeparator4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 550, 700, 10));
@@ -370,6 +380,11 @@ public class GUI extends javax.swing.JFrame implements Observateur{
         jLabel24.setForeground(new java.awt.Color(255, 255, 255));
         jLabel24.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel24.setText("Supprimer le produit");
+        jLabel24.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel24MouseClicked(evt);
+            }
+        });
         DeleteProductButton.add(jLabel24, java.awt.BorderLayout.CENTER);
 
         Details.add(DeleteProductButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 480, 160, 40));
@@ -429,6 +444,8 @@ public class GUI extends javax.swing.JFrame implements Observateur{
 
         jLabel35.setText("Nouvelle catégorie principale");
         Categories.add(jLabel35, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 530, -1, -1));
+
+        headCategoryIdTxt.setText("1");
         Categories.add(headCategoryIdTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 570, 210, 30));
 
         HeadCategorySubmit.setText("Ajouter");
@@ -441,6 +458,8 @@ public class GUI extends javax.swing.JFrame implements Observateur{
 
         jLabel36.setText("Sous catégorie");
         Categories.add(jLabel36, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 620, -1, -1));
+
+        SubCategoryIdTxt.setText("1");
         Categories.add(SubCategoryIdTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 570, 210, 30));
 
         SubCategorySubmit.setText("Ajouter");
@@ -458,6 +477,8 @@ public class GUI extends javax.swing.JFrame implements Observateur{
 
         jLabel38.setText("ID");
         Categories.add(jLabel38, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 550, -1, -1));
+
+        headCategoryNameTxt.setText("gg");
         Categories.add(headCategoryNameTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 570, 210, 30));
 
         jlabel39.setText("ID");
@@ -465,6 +486,8 @@ public class GUI extends javax.swing.JFrame implements Observateur{
 
         jlabel40.setText("Nom de catégorie");
         Categories.add(jlabel40, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 550, -1, -1));
+
+        SubCategoryTxt.setText("ez");
         Categories.add(SubCategoryTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 640, 210, 30));
 
         jLabel39.setText("Catégorie parente");
@@ -775,10 +798,16 @@ public class GUI extends javax.swing.JFrame implements Observateur{
         handleProductObservator();
         
         int row = StockTable.getSelectedRow() ;
-        NbProduct.setText(StockTable.getValueAt(row,0).toString());
+        selectedProduit = ((ProduitTableModel)StockTable.getModel()).getProduit(row);
+        NbProduct.setText(selectedProduit.getId()+"");
+        ProductName.setText(selectedProduit.getLibelle());
+        ProductPrice.setText(selectedProduit.getPrix()+"");
+        ProductQty.setText(selectedProduit.getQuantity()+"");
+        
+        /*NbProduct.setText(StockTable.getValueAt(row,0).toString());
         ProductName.setText(StockTable.getValueAt(row,1).toString());
         ProductPrice.setText(StockTable.getValueAt(row,2).toString());
-        ProductQty.setText(StockTable.getValueAt(row,3).toString());
+        ProductQty.setText(StockTable.getValueAt(row,3).toString());*/
         MainTab.setSelectedIndex(3);
     }//GEN-LAST:event_StockTableMouseClicked
 
@@ -797,7 +826,7 @@ public class GUI extends javax.swing.JFrame implements Observateur{
     private void SubmitEditProductMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SubmitEditProductMouseClicked
         // TODO add your handling code here:
         handleProductObservator();
-        //PdtNameText1.set
+        
     }//GEN-LAST:event_SubmitEditProductMouseClicked
 
     private void SubmitEditProductMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SubmitEditProductMouseEntered
@@ -835,16 +864,31 @@ public class GUI extends javax.swing.JFrame implements Observateur{
 
     private void jLabel29MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel29MouseClicked
         // TODO add your handling code here:
+        selectedProduit.setPrix(Float.parseFloat(PdtPriceText1.getText()));
+        selectedProduit.setLibelle(PdtNameText1.getText());
+        selectedProduit.setQuantity(Integer.parseInt(PdtQtyText1.getText()));
+        MainTab.setSelectedIndex(1);
     }//GEN-LAST:event_jLabel29MouseClicked
 
     private void ProductEditButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ProductEditButtonMouseClicked
         // TODO add your handling code here:
-        NbPdtText1.setText(NbProduct.toString());
-        PdtNameText1.setText(ProductName.toString());
-        PdtPriceText1.setText(ProductPrice.toString());
-        PdtQtyText1.setText(ProductQty.toString());
+        NbPdtText1.setText(NbProduct.getText());
+        PdtNameText1.setText(ProductName.getText());
+        PdtPriceText1.setText(ProductPrice.getText());
+        PdtQtyText1.setText(ProductQty.getText());
+        
+        
+        
         MainTab.setSelectedIndex(5);
     }//GEN-LAST:event_ProductEditButtonMouseClicked
+
+    private void jLabel24MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel24MouseClicked
+        // TODO add your handling code here:
+        int row = StockTable.getSelectedRow();
+        selectedProduit = ((ProduitTableModel)StockTable.getModel()).getProduit(row);
+        model.removeProduit(selectedProduit);
+        MainTab.setSelectedIndex(1);
+    }//GEN-LAST:event_jLabel24MouseClicked
 
     /**
      * @param args the command line arguments

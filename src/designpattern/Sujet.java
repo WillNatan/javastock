@@ -7,6 +7,7 @@ package designpattern;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import sun.awt.RepaintArea;
 
 /**
  *
@@ -24,7 +25,7 @@ public class Sujet {
      public void supprimerObservateur  (Observateur o){
         collectionObservateur.remove(o);
     }
-      public void notifierObservateurs(){
+    public void notifierObservateurs(){
         for(Observateur obs : collectionObservateur){
             obs.notifier(this);
         }

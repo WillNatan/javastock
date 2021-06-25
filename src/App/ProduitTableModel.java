@@ -61,6 +61,12 @@ public class ProduitTableModel extends AbstractTableModel {
         this.fireTableChanged(null);
     }
     
+    public void removeProduit(Produit p) {
+       produits.remove(p);
+       this.fireTableDataChanged();
+       this.fireTableChanged(null);
+    }
+    
     
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
@@ -83,6 +89,10 @@ public class ProduitTableModel extends AbstractTableModel {
         }
 
         return value;
+    }
+    
+    public Produit getProduit(int index){
+        return this.produits.get(index);
     }
 
 }
